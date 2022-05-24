@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthBaseClient;
@@ -50,6 +51,66 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
 		params.put("since_id", 1);
+		params.put("tweet_mode", "extended");
+		client.get(apiUrl, params, handler);
+	}
+
+	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("status", tweetContent);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	public void favoriteTweet(Tweet tweet, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+		RequestParams params = new RequestParams();
+		params.put("id",tweet.id);
+		client.post(apiUrl, params,"", handler);
+	}
+
+	public void unFavoriteTweet(Tweet tweet, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/destroy.json");
+		RequestParams params = new RequestParams();
+		params.put("id", tweet.id);
+		client.post(apiUrl, params,"", handler);
+	}
+
+	public void retweet(Tweet tweet, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/retweet/");
+		apiUrl  = apiUrl + tweet.id + ".json";
+		RequestParams params = new RequestParams();
+		client.post(apiUrl, params,"", handler);
+	}
+
+	public void unRetweet(Tweet tweet, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/unretweet/");
+		apiUrl  = apiUrl + tweet.id + ".json";
+		RequestParams params = new RequestParams();
+		client.post(apiUrl, params,"", handler);
+	}
+
+	public void replyTweet(String tweetContent, JsonHttpResponseHandler handler, Tweet tweet) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", tweetContent);
+		params.put("in_reply_to_status_id", tweet.id);
+		client.post(apiUrl, params,"", handler);
+	}
+
+	public void getFollowers(String userid, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("followers/list.json");
+		RequestParams params = new RequestParams();
+		params.put("user_id", userid);
+		client.get(apiUrl, params, handler);
+
+	}
+
+	public void getFollowing(String userid, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("friends/list.json");
+		RequestParams params = new RequestParams();
+		params.put("user_id", userid);
 		client.get(apiUrl, params, handler);
 	}
 

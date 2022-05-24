@@ -18,10 +18,11 @@
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfile"
-        tools:text="mayravs" />
+        android:layout_toEndOf="@+id/tvName"
+        android:ellipsize="end"
+        tools:text="\@mayravs" />
 
     <TextView
         android:id="@+id/tvBody"
@@ -31,5 +32,98 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfile"
+        android:autoLink="all"
+        android:linksClickable="true"
         tools:text="This is my tweet!!" />
+
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvScreenName"
+        tools:text="3h" />
+
+    <ImageButton
+        android:id="@+id/btnRetweet"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_below="@+id/ivTweetImage"
+        android:layout_centerInParent="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/tvRetweetCount"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_vector_retweet_stroke"
+        app:tint="@color/light_gray" />
+
+    <ImageButton
+        android:id="@+id/btnFavorite"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ivTweetImage"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/tvFavoriteCount"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_vector_heart_stroke"
+        app:tint="@color/light_gray" />
+
+    <ImageButton
+        android:id="@+id/btnReply"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ivTweetImage"
+        android:layout_alignStart="@id/ivTweetImage"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="70dp"
+        android:layout_toStartOf="@+id/btnRetweet"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/vector_compose_dm_fab"
+        app:tint="@color/light_gray" />
+
+    <ImageView
+        android:id="@+id/ivTweetImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignStart="@id/tvBody"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:adjustViewBounds="true"
+        tools:srcCompat="@drawable/ic_vector_photo_stroke" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:textColor="@android:color/black"
+        tools:text="Mayra" />
+
+    <TextView
+        android:id="@+id/tvFavoriteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivTweetImage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="20dp"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/tvRetweetCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivTweetImage"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="69dp"
+        android:layout_toStartOf="@+id/btnFavorite"
+        tools:text="15" />
 </RelativeLayout>
