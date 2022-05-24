@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.codepath.apps.restclienttemplate.fragments.ReplyDialogFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -132,7 +133,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             btnReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i(TAG, "Replying to tweet");
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("Tweet", Parcels.wrap(tweet));
+                    FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+                    ReplyDialogFragment replyTweetDialogFragment = ReplyDialogFragment.newInstance("Some Title");
+                    replyTweetDialogFragment.setArguments(bundle);
+                    replyTweetDialogFragment.show(fm, "fragment_reply_dialog");
                 }
             });
 

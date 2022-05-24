@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reply_layout"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"  >
+
+    <TextView
+        android:id="@+id/tvReplyTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/medium_gray"
+        tools:text="Replying to @Reuters" />
+
+    <EditText
+        android:id="@+id/etReplyTweet"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginRight="0dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Tweet your reply"
+        android:inputType="textMultiLine"
+        android:minLines="5"></EditText>
+
+    <TextView
+        android:id="@+id/tvRemain"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right|left"
+        android:layout_marginStart="5dp"
+        tools:text="3/280" />
+
+    <Button
+        android:id="@+id/btnReplyNow"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="#1DA1F2"
+        android:text="Reply"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
