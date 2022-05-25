@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,13 +71,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // define a viewHolder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public static final String TAG = "TweetsAdapter";
-        private static final int SECOND_MILLIS = 1000;
-        private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
-        private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
-        private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
         ImageView ivProfileImage;
         TextView tvScreenName;
@@ -101,6 +100,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             btnReply = itemView.findViewById(R.id.btnReply);
             tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
             tvRetweetCount = itemView.findViewById(R.id.tvRetweetCount);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Tweet tweet) {
@@ -109,7 +109,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvRetweetCount.setText(tweet.retweetCount+"");
             tvFavoriteCount.setText(tweet.favoriteCount+"");
             tvScreenName.setText("@" + tweet.user.screenName + " -- ");
-            tvCreatedAt.setText(getRelativeTimeAgo(tweet.createdAt));
+            tvCreatedAt.setText(tweet.time);
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCorners(100)).into(ivProfileImage);
 
             if (tweet.retweeted) {
@@ -227,37 +227,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
         }
 
-        public String getRelativeTimeAgo(String rawJsonDate) {
-            String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-            SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-            sf.setLenient(true);
-
-            try {
-                long time = sf.parse(rawJsonDate).getTime();
-                long now = System.currentTimeMillis();
-
-                final long diff = now - time;
-                if (diff < MINUTE_MILLIS) {
-                    return "just now";
-                } else if (diff < 2 * MINUTE_MILLIS) {
-                    return "a minute ago";
-                } else if (diff < 50 * MINUTE_MILLIS) {
-                    return diff / MINUTE_MILLIS + "m";
-                } else if (diff < 90 * MINUTE_MILLIS) {
-                    return "an hour ago";
-                } else if (diff < 24 * HOUR_MILLIS) {
-                    return diff / HOUR_MILLIS + "h";
-                } else if (diff < 48 * HOUR_MILLIS) {
-                    return "yesterday";
-                } else {
-                    return diff / DAY_MILLIS + "d";
-                }
-            } catch (ParseException e) {
-                Log.i("TweetsAdapter", "getRelativeTimeAgo failed");
-                e.printStackTrace();
-            }
-
-            return "";
+        @Override
+        public void onClick(View view) {
+            Log.d("TweetsAdapter", "in here");
+            Tweet tweet = tweets.get(getAdapterPosition());
+            Intent intent = new Intent(view.getContext(), TweetDetailActivity.class);
+            intent.putExtra("tweet", Parcels.wrap(tweet));
+            // animation for shared profile image
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation((Activity) view.getContext(), (View) ivProfileImage, "profile");
+            view.getContext().startActivity(intent, options.toBundle());
         }
     }
 

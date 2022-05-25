@@ -81,7 +81,7 @@ public class ReplyDialogFragment extends DialogFragment {
                 if (MAX_TWEET_LENGTH - editable.toString().length() < 0) {
                     tvRemain.setTextColor(Color.RED);
                 }
-                tvRemain.setText(MAX_TWEET_LENGTH - editable.toString().length() + "/140");
+                tvRemain.setText(MAX_TWEET_LENGTH - editable.toString().length() + "/280");
             }
         });
 
